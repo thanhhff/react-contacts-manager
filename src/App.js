@@ -1,16 +1,16 @@
 import React from 'react'
 
-/* スタイルシート */
-import './styles/main.css';
+import { Container } from "semantic-ui-react";
 
 /* コンポーネント */
+import ContactView from './components/contact-view'
 
 function App() {
   return (
-    <div className="container is-fluid">
-      
-      Hello 
-    </div>
+    <Container>
+      <h1><center>連絡先管理</center></h1>
+      <ContactView/>
+    </Container>
   );
 }
 
