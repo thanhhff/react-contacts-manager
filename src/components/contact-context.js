@@ -5,19 +5,19 @@ export const ContactContext = createContext();
 const initialState = {
   contacts: [
     {
-      id: "098",
-      name: "Diana Prince",
-      email: "diana@us.army.mil"
+      id: "01",
+      name: "Test 01",
+      email: "test@gmail.com"
     },
     {
-      id: "099",
-      name: "Bruce Wayne",
-      email: "bruce@batmail.com"
+      id: "02",
+      name: "Test 02",
+      email: "test@gmail.com"
     },
     {
-      id: "100",
-      name: "Clark Kent",
-      email: "clark@metropolitan.com"
+      id: "03",
+      name: "Test 03",
+      email: "test@gmail.com"
     }
   ],
   loading: false,
