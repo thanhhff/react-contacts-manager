@@ -1,40 +1,23 @@
 import React, { useReducer, createContext } from "react";
+import useStorage from '../hooks/storage';
 
 export const ContactContext = createContext();
 
-const initialState = {
-  contacts: [
-    {
-      id: "01",
-      name: "Test 01",
-      email: "test@gmail.com"
-    },
-    {
-      id: "02",
-      name: "Test 02",
-      email: "test@gmail.com"
-    },
-    {
-      id: "03",
-      name: "Test 03",
-      email: "test@gmail.com"
-    }
-  ],
-  loading: false,
-  error: null
-};
+const [contacts, addContact, removeContact] = useStorage();
 
 
-const reducer = (state, action) => {
+const reducer = (contacts, action) => {
   // TODO: viết hàm sử dụng useReducer 
   switch (action.type) {
     case "ADD_CONTACT":
+      addContact([ ...contacts, action.payload]);
       return {
-        contacts: [...state.contacts, action.payload]
+        contacts: [ ...contacts, action.payload]
       };
     case "DEL_CONTACT":
+      removeContact(action.payload);
       return {
-        contacts: state.contacts.filter(
+        contacts: contacts.filter(
           contact => contact.id !== action.payload
         )
       };
@@ -52,7 +35,7 @@ const reducer = (state, action) => {
 };
 
 export const ContactContextProvider = props => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, contacts);
 
   return (
     <ContactContext.Provider value={[state, dispatch]}>

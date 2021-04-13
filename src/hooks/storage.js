@@ -22,9 +22,10 @@ function useStorage() {
         setContacts(contacts);
     }
 
-    const removeContact = () => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
-        setContacts([])
+    const removeContact = contact => {
+        contacts.filter(ele => ele.id !== contact.id );
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([contacts]));
+        setContacts(contacts);
     }
 
     return [contacts, addContact, removeContact];
