@@ -55,7 +55,7 @@ export default function ContactTable() {
                 disabled={!selectedId}
                 onClick={onRemoveUser}
               >
-                <Icon name="trash" /> Remove User
+                <Icon name="trash" /> 削除
               </Button>
             </Table.HeaderCell>
           </Table.Row>
