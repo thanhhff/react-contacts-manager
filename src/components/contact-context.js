@@ -27,6 +27,28 @@ const initialState = {
 
 const reducer = (state, action) => {
   // TODO: viết hàm sử dụng useReducer 
+  switch (action.type) {
+    case "ADD_CONTACT":
+      return {
+        contacts: [...state.contacts, action.payload]
+      };
+    case "DEL_CONTACT":
+      return {
+        contacts: state.contacts.filter(
+          contact => contact.id !== action.payload
+        )
+      };
+    case "START":
+      return {
+        loading: true
+      };
+    case "COMPLETE":
+      return {
+        loading: false
+      };
+    default:
+      throw new Error();
+  }
 };
 
 export const ContactContextProvider = props => {
