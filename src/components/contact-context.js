@@ -3,28 +3,21 @@ import useStorage from '../hooks/storage';
 
 export const ContactContext = createContext();
 
-const initialState = {
-  contacts: [
-    {
-      id: "01",
-      name: "Test 01",
-      email: "test@gmail.com"
-    },
-    {
-      id: "02",
-      name: "Test 02",
-      email: "test@gmail.com"
-    },
-    {
-      id: "03",
-      name: "Test 03",
-      email: "test@gmail.com"
-    }
-  ],
-  loading: false,
-  error: null
+export const ContactContextProvider = props => {
+  const [contacts] = useStorage();
+  const initialState = {
+    contacts,
+    error: null,
+    loading: false,
+  }
+  const [state, dispatch] = useReducer(reducer, initialState);
+  
+  return (
+    <ContactContext.Provider value={[state, dispatch]}>
+      {props.children}
+    </ContactContext.Provider>
+  );
 };
-
 
 const reducer = (state, action) => {
   // TODO: viết hàm sử dụng useReducer 
@@ -50,14 +43,4 @@ const reducer = (state, action) => {
     default:
       throw new Error();
   }
-};
-
-export const ContactContextProvider = props => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  return (
-    <ContactContext.Provider value={[state, dispatch]}>
-      {props.children}
-    </ContactContext.Provider>
-  );
 };

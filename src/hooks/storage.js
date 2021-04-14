@@ -1,5 +1,3 @@
-/*global localStorage */
-
 import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'itss';
@@ -8,23 +6,19 @@ function useStorage() {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        const data = localStorage.getItem(STORAGE_KEY);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+    }, []);
 
-        if (!data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
-        } else {
-            setContacts(data);
-        }
-    }, [])
-
-    const addContact = contacts => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([contacts]));
+    const addContact = contact => {
+        contacts.push(contact);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
         setContacts(contacts);
     }
 
-    const removeContact = () => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
-        setContacts([])
+    const removeContact = id => {
+        contacts.filter(contact => contact.id !== id);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
+        setContacts(contacts);
     }
 
     return [contacts, addContact, removeContact];
