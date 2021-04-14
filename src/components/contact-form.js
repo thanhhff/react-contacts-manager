@@ -1,9 +1,5 @@
 import React, { useState, useContext } from "react";
 import { Segment, Form, Input, Button } from "semantic-ui-react";
-import _ from "lodash";
-
-import useStorage from "../hooks/storage";
-
 import {getKey} from "../lib/util";
 
 function ContactForm( {items, putItems} ) {

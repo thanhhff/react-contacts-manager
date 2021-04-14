@@ -19,7 +19,6 @@ export default function Contacts() {
   const [items, putItems, clearItems] = useStorage();
   
   return (
-    // <ContactContextProvider>
       <Segment basic>
         <Header as="h3">連絡先</Header>
         <ContactForm 
@@ -32,6 +31,5 @@ export default function Contacts() {
         clearItems={clearItems}
         />
       </Segment>
-    // </ContactContextProvider>
   );
 }

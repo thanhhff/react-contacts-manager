@@ -30,8 +30,8 @@ function ContactTable( {items, putItems, clearItems} ) {
       <Table celled striped selectable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Email</Table.HeaderCell>
+            <Table.HeaderCell>名前</Table.HeaderCell>
+            <Table.HeaderCell>メール</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>{rows}</Table.Body>

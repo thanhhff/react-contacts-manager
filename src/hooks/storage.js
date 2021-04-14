@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 　  - localstrageにあるTodoを削除する
 */
 
-const STORAGE_KEY = 'itss-todo2';
+const STORAGE_KEY = 'itss-todo';
 
 function useStorage() {
   const [items, setItems] = useState([]);
@@ -27,12 +27,12 @@ function useStorage() {
 
   const putItems = items => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    setItems  (items);
+    setItems(items);
   };
 
   const clearItems = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
-    setItems([]);
+    setItems(items.filter(item => item.select === false));
   };
 
   return [items, putItems, clearItems];
