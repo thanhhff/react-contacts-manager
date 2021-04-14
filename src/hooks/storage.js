@@ -1,27 +1,41 @@
 import { useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'itss';
+/* 
+  【Storageフック】
+　・TodoをlocalStorageを使って保存する
+　・以下機能をサポートする
+　  - localstrageに保存されているすべてのTodoの読み出し機能
+　  - Todoをlocalstrageに保存する
+　  - localstrageにあるTodoを削除する
+*/
+
+const STORAGE_KEY = 'itss-todo2';
 
 function useStorage() {
-    const [contacts, setContacts] = useState([]);
-
-    useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
-    }, []);
-
-    const addContact = contact => {
-        contacts.push(contact);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
-        setContacts(contacts);
+  const [items, setItems] = useState([]);
+　
+　/* 副作用を使う */
+  useEffect(() => {
+    const data = localStorage.getItem(STORAGE_KEY);
+    
+    if (!data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+    } else {
+      setItems(JSON.parse(data));
     }
+  }, []);
 
-    const removeContact = id => {
-        contacts.filter(contact => contact.id !== id);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
-        setContacts(contacts);
-    }
+  const putItems = items => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    setItems  (items);
+  };
 
-    return [contacts, addContact, removeContact];
+  const clearItems = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
+    setItems([]);
+  };
+
+  return [items, putItems, clearItems];
 }
 
 export default useStorage;

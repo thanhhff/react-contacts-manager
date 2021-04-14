@@ -1,37 +1,28 @@
 import React, { useState, useContext } from "react";
 import { Segment, Table, Button, Icon } from "semantic-ui-react";
-import { ContactContext } from "./contact-context";
-import useStorage from "../hooks/storage";
 
-export default function ContactTable() {
-  const [state, dispatch] = useContext(ContactContext);
-  const [contacts, addContact, removeContact] = useStorage();
-  const [selectedId, setSelectedId] = useState();
+import ContactItem from './contact-item'
 
-  const delContact = id => {
-    dispatch({
-      type: "DEL_CONTACT",
-      payload: id
+function ContactTable( {items, putItems, clearItems} ) {
+  
+  
+  const handleChange = checked => {
+    const newItems = items.map(item => {
+      if (item.key === checked.key) {
+        item.select = !item.select;
+      }
+      return item;
     });
+    putItems(newItems);
   };
 
 
-  const onRemoveUser = () => {
-    delContact(selectedId);
-    removeContact(selectedId);
-    setSelectedId(null); // Clear selection
-  };
-
-  const rows = state.contacts.map(contact => (
-    <Table.Row
-      key={contact.id}
-      onClick={() => setSelectedId(contact.id)}
-      active={contact.id === selectedId}
-    >
-      <Table.Cell>{contact.id}</Table.Cell>
-      <Table.Cell>{contact.name}</Table.Cell>
-      <Table.Cell>{contact.email}</Table.Cell>
-    </Table.Row>
+  const rows = items.map(contact => (
+    <ContactItem 
+      key = {contact.key}
+      contact={contact}
+      onClick={handleChange}
+    />
   ));
 
   return (
@@ -39,7 +30,6 @@ export default function ContactTable() {
       <Table celled striped selectable>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Id</Table.HeaderCell>
             <Table.HeaderCell>Name</Table.HeaderCell>
             <Table.HeaderCell>Email</Table.HeaderCell>
           </Table.Row>
@@ -55,8 +45,7 @@ export default function ContactTable() {
                 labelPosition="left"
                 color="red"
                 size="small"
-                disabled={!selectedId}
-                onClick={onRemoveUser}
+                onClick={clearItems}
               >
                 <Icon name="trash" /> 削除
               </Button>
@@ -67,3 +56,5 @@ export default function ContactTable() {
     </Segment>
   );
 }
+
+export default ContactTable;

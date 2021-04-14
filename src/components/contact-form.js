@@ -1,22 +1,17 @@
 import React, { useState, useContext } from "react";
 import { Segment, Form, Input, Button } from "semantic-ui-react";
 import _ from "lodash";
-import { ContactContext } from "./contact-context";
+
 import useStorage from "../hooks/storage";
 
-export default function ContactForm() {
+import {getKey} from "../lib/util";
+
+function ContactForm( {items, putItems} ) {
   const name = useFormInput("");
   const email = useFormInput("");
-  const [state, dispatch] = useContext(ContactContext);
-  const [contacts, addContact] = useStorage();
 
   const onSubmit = () => {
-    dispatch({
-      type: "ADD_CONTACT",
-      payload: { id: _.uniqueId(10), name: name.value, email: email.value },
-    });
-    // Reset Form
-    addContact({ id: _.uniqueId(10)-1, name: name.value, email: email.value });
+    putItems([...items, { key: getKey(), name: name.value, email: email.value, select: false }]);
     name.onReset();
     email.onReset();
   };
@@ -59,3 +54,5 @@ function useFormInput(initialValue) {
     onReset: handleReset
   };
 }
+
+export default ContactForm;
